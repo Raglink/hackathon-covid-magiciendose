@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "./main.css"
 import VaccineDoseInput from "../../components/VaccineDoseInput"
+import VaccineDosePerCent from "../../components/VaccineDosePerCent"
 
 const ArsForm = () => {
     const dataStructure = {
@@ -24,19 +25,23 @@ const ArsForm = () => {
     departement: [
         {
             departementid: "d1",
-            vaccine: 
+            departementName: "departement 1",
+            vaccines:  
             [{vaccineId:"1",
             nombresDose:2,
+            vaccineName: "Moderna"
             }],
             totalDose:2
          },
         {
             departementid: "d2",
-            vaccine: 
+            departementName:"departement 2",
+            vaccines: 
             [{vaccineId:"2",
-            nombresDose:null,
+            nombresDose:0,
+            vaccineName: "Moderna"
             }],
-            totalDose:null
+            totalDose:""
          },
         
     ]
@@ -51,40 +56,22 @@ const [fields, setFields] = useState(dataStructure)
         <div className="ars-form">
             <p>ARS : Ile de France</p>
             <p>Semaine numéro</p>
-            {fields.vaccines.map((field)=> {return (
+            {fields.vaccines.map((field) => {return (
                     <VaccineDoseInput 
-                        key={field.id}
                         field={field}
                         fieldChange={fieldChange}
+
 
                     />
                 )}
             )}
-            <div>
-                <label>
-                    1ere dose Pfizer :
-                    <input type="text" />
-                </label>
-                <label>
-                    1ere dose Moderna :
-                    <input type="text" />
-                </label>
-            </div>
-            <p>Nom du départ</p>
-            <label>
-                répartion département 1
-                <input type="number" /> % soit
-                <input type="number" />dose
-            </label>
-            <br /><br />
-            <label>
-                Pfiser 1 <input type="text" /> doses
-            </label>
-            <br /><br />
-            <label>
-                Moderna 1 <input type="text" /> doses
-            </label>
-            <p>Nombre de doses réparties XXXX</p>
+            {fields.departement.map((field) => {return(
+                <VaccineDosePerCent
+                    field={field}
+                    fieldChange={fieldChange}
+                />
+            )})}
+
             <button>Validation</button>
         </div>
 

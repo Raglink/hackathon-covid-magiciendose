@@ -1,6 +1,4 @@
-import React, { useEffect } from "react"
-
-//  FIXME: re render this part after field vaccines cahnge
+import React from "react"
 
 const VaccineDoseInput = ({field, 
     fieldChangeDepartmentVaccineCount, 
@@ -8,29 +6,25 @@ const VaccineDoseInput = ({field,
     index, 
     fieldChangeDepartmentVaccineCountPerVaccineName, 
     fieldChangeDepartmentVaccinePerCent,
-    vaccineSumGlobal}) => {
-
-
+    }) => {
         
         const vaccineSumPerDepartment =(field)=> {
         return field.vaccines.reduce((prev, cur)=> {return prev + cur.nombresDose},0)
     }
 
-    console.log("field : ",field )
-
     return(
         <div>
-               <p>Département : {field.departementName}</p><br/>
+               <h3>Département : {field.departementName}</h3><br/>
                <label>
-                   Répartition pour le département : {field.departementName} 
+                   Répartition pour le département {field.departementName}  :
                    <input 
                     type="number" 
-                    value={field.dosePercent || 0} 
+                    value={field.dosePercent || ""} 
                     onChange={(e)=>fieldChangeDepartmentVaccinePerCent(path, index, (e.target.value))}
                     /> % soit 
                 <input 
                     type="number" 
-                    value={field.totalDose || 0} 
+                    value={field.totalDose || ""} 
                     onChange={(e)=>fieldChangeDepartmentVaccineCount(path, index, e.target.value)}/> doses. 
             </label>
             <br/>
@@ -49,6 +43,7 @@ const VaccineDoseInput = ({field,
             })}
 
             <p>Actuellement vous avez réparti {vaccineSumPerDepartment(field)} doses</p>
+            <hr/>
         </div>
     )
 }

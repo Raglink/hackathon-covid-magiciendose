@@ -28,11 +28,11 @@ const ArsForm = () => {
             vaccines:  
             [{vaccineId:"1",
             nombresDose:2,
-            vaccineName: "Moderna"
+            vaccineName: "Pziser"
             },
             {vaccineId:"5",
             nombresDose:3,
-            vaccineName: "Janssen"
+            vaccineName: "Moderna"
             }],
             totalDose:null,
             dosePercent:null
@@ -43,7 +43,7 @@ const ArsForm = () => {
             vaccines: 
             [{vaccineId:"2",
             nombresDose:0,
-            vaccineName: "Moderna"
+            vaccineName: "Pziser"
             }],
             totalDose:null,
             dosePercent:null
@@ -53,23 +53,42 @@ const ArsForm = () => {
     }
     const [fields, setFields] = useState(dataStructure)
     const [vaccineSumGlobal, setVaccineSumGlobal] = useState(0)
-    useEffect(()=>{
-        setVaccineSumGlobal(fields.vaccines.reduce((prev, cur)=> {return prev + cur.nb_dose},0))
-    },[fields])
-    const convertPerCentToDose = (value)=>{
-        return Math.trunc(vaccineSumGlobal*value/100)
-    }
-
     const doseToPerCent =(value)=>{
         return value/vaccineSumGlobal *100 
     }
+    useEffect(()=>{
+        setVaccineSumGlobal(fields.vaccines.reduce((prev, cur)=> {return prev + cur.nb_dose},0))
+        
+
+    },[fields])
+
+    useEffect(()=>{
+                const tempValue = {...fields}
+        tempValue.departement.map((item)=>{return(
+            item.dosePercent=Math.trunc(doseToPerCent(item.totalDose))
+            ) 
+        })
+        setFields(tempValue)
+
+    },[vaccineSumGlobal])
+    const convertPerCentToDose = (value)=>{
+        return Math.trunc(vaccineSumGlobal*value/100)
+
+    }
+
+
 
     //  TODO : Refacto this part in One function
     
     const fieldChangeGlobalVaccineCount = (path, index, value) => {
         const tempValue = {...fields}
         tempValue[path][index].nb_dose= value * 1
-        setFields(tempValue)
+        console.log("tempValue : ",tempValue)
+        tempValue.departement.map((item)=>{return(
+            item.dosePercent=doseToPerCent(item.totalDose).toFixed(2)
+            ) 
+        })
+            setFields(tempValue)
         return (console.log("changed"))
     }
     const fieldChangeDepartmentVaccineCount = (path, index, value) => {
@@ -99,8 +118,9 @@ const ArsForm = () => {
 
     return (
         <div className="ars-form">
-            <p>ARS : Ile de France</p>
-            <p>Semaine numéro</p>
+            <h1>ARS : Ile de France</h1>
+            <div className="paper">
+            <p>Saisissez le formulaire pour la semaine numéro 17</p>
             {fields.vaccines.map((field, index) => {return (
                     <VaccineDoseInput 
                         field={field}
@@ -112,6 +132,8 @@ const ArsForm = () => {
                 )}
             )}
             <p>Nombre total de doses à répartir : {vaccineSumGlobal}</p>
+            <hr/>
+            <h2>Répartiton des doses</h2>
             {fields.departement.map((field, index) => {return(
                 <VaccineDosePerCent
                     field={field}
@@ -126,6 +148,7 @@ const ArsForm = () => {
             )})}
 
             <button>Validation</button>
+            </div>
         </div>
 
     )

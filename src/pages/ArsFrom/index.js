@@ -1,13 +1,11 @@
 import React, {useEffect, useState } from "react"
 
 
-
 import "./main.css"
 import VaccineDoseInput from "../../components/VaccineDoseInput"
 import VaccineDosePerCent from "../../components/VaccineDosePerCent"
 
 const ArsForm = () => {
-
     const dataStructure = {
         vaccines:[ 
         {
@@ -24,7 +22,7 @@ const ArsForm = () => {
     departement: [
         {
             departementid: "d1",
-            departementName: "Essone",
+            departementName: "Essonne",
             vaccines:  
             [{vaccineId:"1",
             nombresDose:2,
@@ -117,6 +115,8 @@ const ArsForm = () => {
     }
 
     return (
+        <>
+
         <div className="ars-form">
             <h1>ARS : Ile de France</h1>
             <div className="paper">
@@ -150,7 +150,7 @@ const ArsForm = () => {
             <button>Validation</button>
             </div>
         </div>
-
+        </>
     )
 }
 

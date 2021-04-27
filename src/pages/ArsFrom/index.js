@@ -1,4 +1,4 @@
-import React, {useState } from "react"
+import React, {useEffect, useState } from "react"
 
 
 
@@ -7,7 +7,6 @@ import VaccineDoseInput from "../../components/VaccineDoseInput"
 import VaccineDosePerCent from "../../components/VaccineDosePerCent"
 
 const ArsForm = () => {
-
 
     const dataStructure = {
         vaccines:[ 
@@ -53,12 +52,14 @@ const ArsForm = () => {
     ]
     }
     const [fields, setFields] = useState(dataStructure)
-
-    let vaccineSumGlobal =  fields.vaccines.reduce((prev, cur)=> {return prev + cur.nb_dose},0)
-    console.log("vaccineSumGlobal : ", vaccineSumGlobal)
+    const [vaccineSumGlobal, setVaccineSumGlobal] = useState(0)
+    useEffect(()=>{
+        setVaccineSumGlobal(fields.vaccines.reduce((prev, cur)=> {return prev + cur.nb_dose},0))
+    },[fields])
     const convertPerCentToDose = (value)=>{
         return Math.trunc(vaccineSumGlobal*value/100)
     }
+
     const doseToPerCent =(value)=>{
         return value/vaccineSumGlobal *100 
     }

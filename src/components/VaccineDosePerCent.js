@@ -1,14 +1,14 @@
-import React from "react"
+import React, { useEffect } from "react"
 
-//  TODO: - ADD per cent mecanism
-//          - ADD check vaccine sum > totalDose
+//  FIXME: re render this part after field vaccines cahnge
 
 const VaccineDoseInput = ({field, 
     fieldChangeDepartmentVaccineCount, 
     path, 
     index, 
     fieldChangeDepartmentVaccineCountPerVaccineName, 
-    fieldChangeDepartmentVaccinePerCent}) => {
+    fieldChangeDepartmentVaccinePerCent,
+    vaccineSumGlobal}) => {
 
 
         
@@ -17,6 +17,7 @@ const VaccineDoseInput = ({field,
     }
 
     console.log("field : ",field )
+
     return(
         <div>
                <p>Département : {field.departementName}</p><br/>
@@ -47,7 +48,7 @@ const VaccineDoseInput = ({field,
             )
             })}
 
-            <p>Nombre de doses réparties sur ce département {vaccineSumPerDepartment(field)}</p>
+            <p>Actuellement vous avez réparti {vaccineSumPerDepartment(field)} doses</p>
         </div>
     )
 }

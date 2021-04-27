@@ -1,35 +1,53 @@
 import React from "react"
 
-const VaccineDoseInput = ({field, fieldChange}) => {
-    console.log("field : ", field)
+//  TODO: - ADD per cent mecanism
+//          - ADD check vaccine sum > totalDose
 
+const VaccineDoseInput = ({field, 
+    fieldChangeDepartmentVaccineCount, 
+    path, 
+    index, 
+    fieldChangeDepartmentVaccineCountPerVaccineName, 
+    fieldChangeDepartmentVaccinePerCent}) => {
+
+
+        
+        const vaccineSumPerDepartment =(field)=> {
+        return field.vaccines.reduce((prev, cur)=> {return prev + cur.nombresDose},0)
+    }
+
+    console.log("field : ",field )
     return(
-        <div key={field.departementid}>
-               <p>Département : {field.departementid}</p>
+        <div>
+               <p>Département : {field.departementName}</p><br/>
                <label>
-                   Répartition pour le département : {field.departementid} 
+                   Répartition pour le département : {field.departementName} 
                    <input 
                     type="number" 
-                    value={field.totalDose} 
-                    onChange={(e)=>fieldChange(field.departementid, e.target.value)}/> % soit 
+                    value={field.dosePercent || 0} 
+                    onChange={(e)=>fieldChangeDepartmentVaccinePerCent(path, index, (e.target.value))}
+                    /> % soit 
                 <input 
                     type="number" 
-                    value={field.totalDose} 
-                    onChange={(e)=>fieldChange(field.departementid, e.target.value)}/> doses. 
+                    value={field.totalDose || 0} 
+                    onChange={(e)=>fieldChangeDepartmentVaccineCount(path, index, e.target.value)}/> doses. 
             </label>
-            {field.vaccines.map((vaccine) => {
+            <br/>
+            {field.vaccines.map((vaccine, subIndex) => {
                 return (
-                    <label key={vaccine.vaccineId}>
+                    <div key={subIndex}>
+                    <label >
                         {vaccine.vaccineName}
                         <input 
                         type="number" 
                         value={vaccine.nombresDose} 
-                        onChange={(e)=>fieldChange(vaccine.vaccineId, e.target.value)}/> doses. 
-                    </label>
+                        onChange={(e)=>fieldChangeDepartmentVaccineCountPerVaccineName(path, index, subIndex  , e.target.value)}/> doses. 
+                    </label><br/>
+                    </div>
             )
             })}
 
-            <p>Nombre de doses réparties XXXX</p>
+            <p>Nombre de doses réparties sur ce département {vaccineSumPerDepartment(field)}</p>
         </div>
     )
 }

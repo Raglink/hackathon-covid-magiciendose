@@ -1,74 +1,126 @@
-import React, { useEffect, useState } from "react"
+import React, {useState } from "react"
+
+
+
 import "./main.css"
 import VaccineDoseInput from "../../components/VaccineDoseInput"
 import VaccineDosePerCent from "../../components/VaccineDosePerCent"
 
 const ArsForm = () => {
+
+
     const dataStructure = {
         vaccines:[ 
         {
             vaccineId: "1",
             vaccineName: "Pziser",
-            nb_dose: 1
+            nb_dose: 100
         },
         {
             vaccineId: "2",
             vaccineName: "Moderna",
-            nb_dose: 2
-        },
-        {
-            vaccineId: "3",
-            vaccineName: "Serum",
-            nb_dose: null
+            nb_dose: 100
         }
     ],
     departement: [
         {
             departementid: "d1",
-            departementName: "departement 1",
+            departementName: "Essone",
             vaccines:  
             [{vaccineId:"1",
             nombresDose:2,
             vaccineName: "Moderna"
+            },
+            {vaccineId:"5",
+            nombresDose:3,
+            vaccineName: "Janssen"
             }],
-            totalDose:2
+            totalDose:null,
+            dosePercent:null
          },
         {
             departementid: "d2",
-            departementName:"departement 2",
+            departementName:"Paris",
             vaccines: 
             [{vaccineId:"2",
             nombresDose:0,
             vaccineName: "Moderna"
             }],
-            totalDose:""
+            totalDose:null,
+            dosePercent:null
          },
         
     ]
     }
-    console.log("dataStructure ", dataStructure )
-const [fields, setFields] = useState(dataStructure)
-    const fieldChange = () => {
-        return ("changed")
+    const [fields, setFields] = useState(dataStructure)
+
+    let vaccineSumGlobal =  fields.vaccines.reduce((prev, cur)=> {return prev + cur.nb_dose},0)
+    console.log("vaccineSumGlobal : ", vaccineSumGlobal)
+    const convertPerCentToDose = (value)=>{
+        return Math.trunc(vaccineSumGlobal*value/100)
+    }
+    const doseToPerCent =(value)=>{
+        return value/vaccineSumGlobal *100 
+    }
+
+    //  TODO : Refacto this part in One function
+    
+    const fieldChangeGlobalVaccineCount = (path, index, value) => {
+        const tempValue = {...fields}
+        tempValue[path][index].nb_dose= value * 1
+        setFields(tempValue)
+        return (console.log("changed"))
+    }
+    const fieldChangeDepartmentVaccineCount = (path, index, value) => {
+        const tempValue = {...fields}
+        tempValue[path][index].totalDose= value * 1
+        tempValue[path][index].dosePercent= doseToPerCent(value * 1)
+        console.log("tempValue : ",tempValue)
+        setFields(tempValue)
+        return (console.log("changed"))
+    }
+    const fieldChangeDepartmentVaccinePerCent = (path, index, value) => {
+        const tempValue = {...fields}
+        tempValue[path][index].totalDose= convertPerCentToDose(value * 1)
+        tempValue[path][index].dosePercent= value * 1
+        console.log("tempValue : ",tempValue)
+        setFields(tempValue)
+        return (console.log("changed"))
+    }
+
+    const fieldChangeDepartmentVaccineCountPerVaccineName= (path, index, subIndex, value) => {
+        const tempValue = {...fields}
+        console.log ("tempValue path" ,tempValue[path][index].vaccines[subIndex].nombresDose)
+        tempValue[path][index].vaccines[subIndex].nombresDose = value * 1
+        setFields(tempValue)
+        return (console.log("changed"))
     }
 
     return (
         <div className="ars-form">
             <p>ARS : Ile de France</p>
             <p>Semaine numéro</p>
-            {fields.vaccines.map((field) => {return (
+            {fields.vaccines.map((field, index) => {return (
                     <VaccineDoseInput 
                         field={field}
-                        fieldChange={fieldChange}
-
-
+                        fieldChangeGlobalVaccineCount={fieldChangeGlobalVaccineCount}
+                        path="vaccines"
+                        index={index}
+                        key={index}
                     />
                 )}
             )}
-            {fields.departement.map((field) => {return(
+            <p>Nombre total de doses à répartir : {vaccineSumGlobal}</p>
+            {fields.departement.map((field, index) => {return(
                 <VaccineDosePerCent
                     field={field}
-                    fieldChange={fieldChange}
+                    fieldChangeDepartmentVaccineCount={fieldChangeDepartmentVaccineCount}
+                    fieldChangeDepartmentVaccineCountPerVaccineName={fieldChangeDepartmentVaccineCountPerVaccineName}
+                    fieldChangeDepartmentVaccinePerCent={fieldChangeDepartmentVaccinePerCent}
+                    path="departement"
+                    index={index}
+                    key={index}
+                    vaccineSumGlobal={vaccineSumGlobal}
                 />
             )})}
 

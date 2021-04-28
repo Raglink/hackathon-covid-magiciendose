@@ -11,12 +11,12 @@ const ArsForm = () => {
         {
             vaccineId: "1",
             vaccineName: "Pziser",
-            nb_dose: 100
+            nb_dose: null
         },
         {
             vaccineId: "2",
             vaccineName: "Moderna",
-            nb_dose: 100
+            nb_dose: null
         }
     ],
     departement: [
@@ -25,11 +25,11 @@ const ArsForm = () => {
             departementName: "Essonne",
             vaccines:  
             [{vaccineId:"1",
-            nombresDose:2,
+            nombresDose:null,
             vaccineName: "Pziser"
             },
             {vaccineId:"5",
-            nombresDose:3,
+            nombresDose:null,
             vaccineName: "Moderna"
             }],
             totalDose:null,
@@ -40,7 +40,7 @@ const ArsForm = () => {
             departementName:"Paris",
             vaccines: 
             [{vaccineId:"2",
-            nombresDose:0,
+            nombresDose:null,
             vaccineName: "Pziser"
             }],
             totalDose:null,

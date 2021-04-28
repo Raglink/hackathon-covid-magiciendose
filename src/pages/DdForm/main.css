@@ -67,3 +67,7 @@ button {
   font-size: 1em;
   margin: 20px;
 }
+
+.warning {
+  color: red;
+}

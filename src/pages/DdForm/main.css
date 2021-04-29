@@ -34,7 +34,7 @@ h1 {
   line-height: 3em;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 10px;
 }
 
@@ -70,4 +70,5 @@ button {
 
 .warning {
   color: red;
+  font-size: 16px;
 }

@@ -1,21 +1,19 @@
 import React from "react"
 
 
-const VaccineDosePerCenter = ({field, fieldChangeGlobalVaccineCount, path, index}) => {
-    console.log('field center : ', field)
-    console.log('index center : ', index)
-    //  NEED TO BE AUTOMATIZED
-       return(
-        <div>
-            <h2>{field.center.name}</h2>
-            <label>Répartition du {field.center.name}<input/></label>
-            {field.center.vaccines.map((vaccines, index)=>{
-                return (
+const VaccineDosePerCenter = ({handleChange, doses ,vaccineIndex, dosesIndex, fieldIndex, vaccine}) => {
 
-                    <label><input type="number"/></label>
-                )
-            })}
-        </div>
+       return(
+        <>
+        <label>{vaccine.name} dose {dosesIndex+1}
+            <input 
+                type="number" 
+                value={doses || ""}
+                onChange={(e)=>handleChange( fieldIndex ,vaccineIndex, dosesIndex, e.target.value)}
+            />
+        </label>
+        <br/>
+        </>
     )
 }
 

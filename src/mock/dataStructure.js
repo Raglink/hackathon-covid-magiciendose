@@ -3,12 +3,12 @@ const dataStructure = {
         {
             vaccineId: "1",
             vaccineName: "Pziser",
-            nb_dose: null
+            nb_dose: 0
         },
         {
             vaccineId: "2",
             vaccineName: "Moderna",
-            nb_dose: null
+            nb_dose: 0
         }
     ],
     departement: [
@@ -17,26 +17,26 @@ const dataStructure = {
             departementName: "Essonne",
             vaccines:  
             [{vaccineId:"1",
-            nombresDose:null,
+            nombresDose:0,
             vaccineName: "Pziser"
             },
             {vaccineId:"5",
-            nombresDose:null,
+            nombresDose:0,
             vaccineName: "Moderna"
             }],
-            totalDose:null,
-            dosePercent:null
+            totalDose:0,
+            dosePercent:0
         },
         {
             departementid: "d2",
             departementName:"Paris",
             vaccines: 
             [{vaccineId:"2",
-            nombresDose:null,
+            nombresDose:0,
             vaccineName: "Pziser"
             }],
-            totalDose:null,
-            dosePercent:null
+            totalDose:0,
+            dosePercent:0
         },
     ]
 }

@@ -34,8 +34,7 @@ const ArsForm = () => {
     } 
     
     const fieldChange = (path, index, value, subIndex) => {
-        console.log("fielChange")
-        value = parseFloat(value)
+        value = value * 1
         const tempValue = {...fields}
             if(path === "vaccinesGlobal"){
                 tempValue.vaccines[index].nb_dose= value

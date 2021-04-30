@@ -1,7 +1,7 @@
 import React from "react"
 
 
-const VaccineDosePerCenter = ({handleChange, doses ,vaccineIndex, dosesIndex, fieldIndex, vaccine}) => {
+const VaccineDosePerCenter = ({fieldChange, doses ,vaccineIndex, dosesIndex, fieldIndex, vaccine}) => {
 
        return(
         <>
@@ -9,7 +9,7 @@ const VaccineDosePerCenter = ({handleChange, doses ,vaccineIndex, dosesIndex, fi
             <input 
                 type="number" 
                 value={doses || ""}
-                onChange={(e)=>handleChange( fieldIndex ,vaccineIndex, dosesIndex, e.target.value)}
+                onChange={(e)=>fieldChange( fieldIndex ,vaccineIndex, dosesIndex, e.target.value)}
             />
         </label>
         <br/>

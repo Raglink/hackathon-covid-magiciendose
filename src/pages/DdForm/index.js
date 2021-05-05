@@ -22,7 +22,7 @@ const DdForm = () => {
         }
         let vaccineToAdd = 0
         let vaccineToRemove = 0
-        
+
         do {
             vaccineToAdd ++
         } while ((sumDoses + vaccineToAdd) % boxSize !== 0)
@@ -30,7 +30,7 @@ const DdForm = () => {
         do {
             vaccineToRemove ++
         } while ((sumDoses - vaccineToRemove) % boxSize !== 0)
-        return <p className="warning">Merci de saisir un multiple de {boxSize} pour faire une boite complète : ajoutez {vaccineToAdd} dose ou enlevez {vaccineToRemove} dose(s)</p>
+        return <p className="warning">Merci de saisir un multiple de {boxSize} pour faire une boite complète : ajoutez {vaccineToAdd} dose(s) ou enlevez {vaccineToRemove} dose(s)</p>
     }
 
     return (
